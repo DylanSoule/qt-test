@@ -36,9 +36,19 @@
 	qt6.qtbase
 	qt6Combined
 	qt6.wrapQtAppsHook
+
+	# runtime libraries for qt
+	xorg.xcbutilcursor
+        libxkbcommon
       ];
 
       shellHook = ''
+	export LD_LIBRARY_PATH="${pkgs.lib.makeLibraryPath [
+          pkgs.xorg.xcbutilcursor
+          pkgs.libxkbcommon
+          pkgs.wayland
+        ]}:$LD_LIBRARY_PATH"
+
         code .
       '';
     };
