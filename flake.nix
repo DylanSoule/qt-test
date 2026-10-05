@@ -11,6 +11,15 @@
   in {
     devShells."${system}".default = let
       pkgs = import nixpkgs { inherit system; };
+
+      qt6Combined = pkgs.symlinkJoin {
+	name = "qt6-combined";
+	paths = with pkgs.qt6; [
+	  qtbase
+	  qttools
+	  qtwayland
+	];
+      };
     in pkgs.mkShell {
       # include necessary packages 
       packages = with pkgs; [
@@ -22,6 +31,11 @@
 	# Libraries
         curl
         vmime
+
+	# qt6
+	qt6.qtbase
+	qt6Combined
+	qt6.wrapQtAppsHook
       ];
 
       shellHook = ''
