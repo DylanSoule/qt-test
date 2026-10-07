@@ -1,4 +1,8 @@
 {
-    "cmake.options.statusBarVisibility": "visible",
-    "cmake.buildDirectory": "${workspaceFolder}/builds/${buildKit}/${buildType}"
+  "cmake.configureOnOpen": true,
+  "cmake.configureOnEdit": true,
+  "cmake.generator": "Ninja",
+  "qt-ui.customWidgetsDesignerExePath": "${workspaceFolder}/.nix-qt/bin/designer",
+  "qt.designer.customPath": "${workspaceFolder}/.nix-qt/bin/designer",
+  "qt.designerPath": "${workspaceFolder}/.nix-qt/bin/designer"
 }
