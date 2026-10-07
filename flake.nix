@@ -24,16 +24,16 @@
       # Complete set of runtime libraries needed by Qt 6 platform plugins (X11/Wayland/OpenGL)
       runtimeLibs = with pkgs; [
         libxcb-cursor
-        xorg.xcbutilwm
-        xorg.xcbutilimage
-        xorg.xcbutilkeysyms
-        xorg.xcbutilrenderutil
-        xorg.libX11
-        xorg.libxcb
-        xorg.libXcursor
-        xorg.libXi
-        xorg.libXrender
-        xorg.libXrandr
+        libxcb-wm
+        libxcb-image
+        libxcb-keysyms
+        libxcb-render-util
+        libx11
+        libxcb
+        libxcursor
+        libxi
+        libxrender
+        libxrandr
         libxkbcommon
         wayland
         libglvnd
@@ -52,19 +52,20 @@
         curl
         vmime
 
-        qt6.qtbase
+        # Use qt6Combined exclusively so CMake and VS Code find designer in Qt6_DIR
         qt6Combined
-        qt6.wrapQtAppsHook
       ] ++ runtimeLibs;
 
       shellHook = ''
-        # Override host QT_PLUGIN_PATH so system KDE/Qt plugins do not interfere
-        export QT_PLUGIN_PATH="${qt6Combined}/lib/qt-6/plugins"
+        # Create/update a stable local symlink pointing to the combined Qt package
+        ln -sfn ${qt6Combined} .nix-qt
 
-        # Provide runtime library lookup path for dlopen calls inside Qt platform plugins
+        export QT_PLUGIN_PATH="${qt6Combined}/lib/qt-6/plugins"
         export LD_LIBRARY_PATH="${pkgs.lib.makeLibraryPath runtimeLibs}:$LD_LIBRARY_PATH"
 
-        code .
+        if [ "$TERM_PROGRAM" != "vscode" ]; then
+          code .
+        fi
       '';
     };
   };

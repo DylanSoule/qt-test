@@ -1,0 +1,8 @@
+[
+  {
+    "name": "Nix Environment",
+    "environmentVariables": {
+      "QTDIR": "${env:QT_PLUGIN_PATH}/../.."
+    }
+  }
+]
