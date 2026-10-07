@@ -46,7 +46,7 @@
       packages = with pkgs; [
         gcc
         gdb
-        gnumake
+        ninja
         cmake
         pkg-config
         curl
